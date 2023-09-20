@@ -33,7 +33,7 @@ class UserController extends Controller
     {
         $validate = $request->validated();
         $token = $userService->login($validate);
-        if (!$token) {
+        if ($token == -1) {
             return response()->json([
                 'message' => 'Something went wrong',
             ], 500);
