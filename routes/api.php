@@ -71,9 +71,11 @@ Route::middleware('auth:sanctum')->group(function () {
 
 
     // Routes for DepartmentController
-    Route::post('/departments', [DepartmentController::class, 'postDepartments'])->middleware('permission:can-add-department');
-    Route::put('/departments/{id}', [DepartmentController::class, 'updateDepartments'])->middleware('permission:can-update-department');
-    Route::delete('/departments/{id}', [DepartmentController::class, 'deleteDepartments'])->middleware('permission:can-delete-department');
-    Route::get('/departments', [DepartmentController::class, 'getDepartments'])->middleware('permission:can-view-department');
-    Route::get('/departments/{id}', [DepartmentController::class, 'showDepartments'])->middleware('permission:can-view-department');
+    Route::prefix('/departments')->group(function () {
+        Route::post('/', [DepartmentController::class, 'postDepartments'])->middleware('permission:can-add-department'); //Post  department
+        Route::put('/{id}', [DepartmentController::class, 'updateDepartments'])->middleware('permission:can-update-department');
+        Route::delete('/{id}', [DepartmentController::class, 'deleteDepartments'])->middleware('permission:can-delete-department');
+        Route::get('/', [DepartmentController::class, 'getDepartments'])->middleware('permission:can-view-department');
+        Route::get('/{id}', [DepartmentController::class, 'showDepartments'])->middleware('permission:can-view-department');
+    });
 });

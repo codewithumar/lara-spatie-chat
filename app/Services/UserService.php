@@ -15,12 +15,12 @@ class UserService
             'email' => $data['email'],
             'password' => $data['password'],
             'role' => 'user',
-        ]);    
+        ]);
 
-        if(! $user){
+        if (!$user) {
             return response()->json([
                 'message' => 'Something went wrong',
-            ], 500);    
+            ], 500);
         }
 
         return response()->json([
@@ -49,7 +49,7 @@ class UserService
     public function logout()
     {
         auth()->user()->tokens()->delete();
-        return response()->json(['message' => 'Logout Successfull'],200);
+        return response()->json(['message' => 'Logout Successfull'], 200);
     }
 
     public function show_all()
@@ -64,8 +64,7 @@ class UserService
     public function show($id)
     {
         $user = User::find($id);
-        if(! $user)
-        {
+        if (!$user) {
             return response()->json([
                 'message' => 'User not found',
             ]);
@@ -80,8 +79,7 @@ class UserService
     public function delete($id)
     {
         $user = User::find($id);
-        if(! $user)
-        {
+        if (!$user) {
             return response()->json([
                 'message' => 'User not found',
             ]);
@@ -96,8 +94,7 @@ class UserService
     public function update($id, array $data)
     {
         $user = User::find($id);
-        if(! $user)
-        {
+        if (!$user) {
             return response()->json([
                 'message' => 'User not found',
             ]);
