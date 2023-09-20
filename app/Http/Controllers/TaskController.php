@@ -20,7 +20,15 @@ class TaskController extends Controller
     {
         $validated = $request->validated();
         $response = $taskService->postTask($validated);
-        return $response;
+        if (!$response) {
+            return response()->json([
+                'message' => 'Failed to create a new Task'
+            ]);
+        }
+        return response()->json([
+            'message' => 'Task Created Successfully'
+        ]);
+
     }
     /**
      * Display the tasks.
@@ -28,12 +36,19 @@ class TaskController extends Controller
     public function getTasks(GetTaskRequest $request, TaskService $taskService)
     {
         $response = $taskService->getTask();
-        return $response;
+        if (!$response) {
+            return response()->json(['message' => 'No Data found'], 404);
+        }
+        return response()->json($response);
+
     }
     public function showTasks($id, TaskService $taskService)
     {
         $response = $taskService->showTask($id);
-        return $response;
+        if ($response === -1) {
+            return response()->json(['message' => 'Task not found'], 404);
+        }
+        return response()->json($response);
     }
 
 
@@ -43,7 +58,13 @@ class TaskController extends Controller
 
         $validated = $request->validated();
         $response = $taskService->updateTask($id, $validated);
-        return $response;
+        if ($response === -1) {
+            return response()->json(['message' => 'Task not found'], 404);
+        }
+        return response()->json([
+            'message' => "Task Updated Successfully"
+        ]);
+
 
     }
 
@@ -54,7 +75,12 @@ class TaskController extends Controller
     {
         $validated = $request->validated();
         $response = $taskService->reassignTask($id, $validated);
-        return $response;
+        if ($response === -1) {
+            return response()->json(['message' => 'Task not found'], 404);
+        }
+        return response()->json([
+            'message' => "Task Re-Assigned Successfully"
+        ]);
     }
 
 
@@ -64,6 +90,9 @@ class TaskController extends Controller
     public function deleteTasks($id, TaskService $taskService)
     {
         $response = $taskService->deleteTask($id);
-        return $response;
+        if ($response === -1) {
+            return response()->json(['message' => 'Task not found'], 404);
+        }
+        return response()->json(['message' => 'Task Deleted Duccessfully']);
     }
 }

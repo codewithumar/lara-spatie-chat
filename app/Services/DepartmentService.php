@@ -11,52 +11,45 @@ class DepartmentService
     public function postDepartment(array $data)
     {
         $name = $data['name'];
-
-        $department = Department::create([
+        return Department::create([
             'name' => $name,
-        ]);
-        if (!$department) {
-            return response()->json([
-                'message' => 'Failed to create a new Department'
-            ]);
-        }
-        return response()->json([
-            'message' => 'Department Created Successfully'
         ]);
 
     }
 
     public function getDepartment()
     {
-        $response = Department::all();
-        return $response;
+        return Department::all();
+
     }
     public function showDepartment($id)
     {
         $department = Department::find($id);
         if (!$department) {
-            return response()->json(['message' => 'Department not found'], 404);
+            return -1;
         }
-        return response()->json($department);
+        return $department;
     }
 
     public function updateDepartment($id, array $data)
     {
         $department = Department::find($id);
+        if (!$department) {
+            return -1;
+        }
         $department->name = $data['name'];
+        return $department->save();
 
-        // Save the updated department
-        $department->save();
-        return response()->json([
-            'message' => "Department Updated Successfully"
-        ]);
     }
 
     public function deleteDepartment($id)
     {
         $department = Department::find($id);
-        $department->delete();
-        return response()->json(['message' => 'Department Deleted Duccessfully']);
+        if (!$department) {
+            return -1;
+        }
+        return $department->delete();
+
     }
 
 }
