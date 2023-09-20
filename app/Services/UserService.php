@@ -26,7 +26,7 @@ class UserService
 
         $user = User::where('email', $email)->first();
         if (!$user || !Hash::check($password, $user->password)) {
-            return response()->json(['message' => 'Please Enter Valid Credentials'], 401);
+            return -1;
         }
         $token = $user->createToken('token')->plainTextToken;
         return $token;
