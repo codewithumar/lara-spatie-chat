@@ -28,7 +28,6 @@ class TaskController extends Controller
         return response()->json([
             'message' => 'Task Created Successfully'
         ]);
-
     }
     /**
      * Display the tasks.
@@ -40,7 +39,6 @@ class TaskController extends Controller
             return response()->json(['message' => 'No Data found'], 404);
         }
         return response()->json($response);
-
     }
     public function showTasks($id, TaskService $taskService)
     {
@@ -64,8 +62,6 @@ class TaskController extends Controller
         return response()->json([
             'message' => "Task Updated Successfully"
         ]);
-
-
     }
 
     /**

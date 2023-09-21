@@ -33,7 +33,7 @@ class TeamController extends Controller
             'teamlead_id' => $request->teamlead_id,
         ]);
 
-        if(! $team){
+        if (!$team) {
             return response()->json([
                 'message' => 'Failed to create a new Team',
             ]);
@@ -73,7 +73,7 @@ class TeamController extends Controller
     }
 
 
-    public function destroy(Request $request,$id)
+    public function destroy(Request $request, $id)
     {
         $team = Team::find($id);
 

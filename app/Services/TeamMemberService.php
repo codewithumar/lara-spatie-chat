@@ -11,9 +11,13 @@ class TeamMemberService
     public function add(array $data)
     {
         return  TeamMember::create([
-            'team_id' => $data['team_id'],
             'user_id' => $data['user_id'],
+            'team_id' => $data['team_id'],
         ]);
+    }
+    public function checkTeam($id)
+    {
+        return  TeamMember::where('user_id', $id)->get();
     }
 
     public function show_all()

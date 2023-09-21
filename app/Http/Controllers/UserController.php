@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\User;
-use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\RegisterUserRequest;
 use App\Http\Requests\LoginUserRequest;
 use App\Http\Requests\UpdateUserRequest;
+use App\Services\PermissionsService;
 use App\Services\UserService;
 
 class UserController extends Controller
@@ -29,18 +27,27 @@ class UserController extends Controller
         ], 200);
     }
 
-    public function loginUser(LoginUserRequest $request, UserService $userService)
+    public function loginUser(LoginUserRequest $request, UserService $userService,  PermissionsService $permissions)
     {
         $validate = $request->validated();
-        $token = $userService->login($validate);
-        if ($token == -1) {
+        $response = $userService->login($validate);
+        if ($response[0] == -1) {
             return response()->json([
                 'message' => 'Something went wrong',
             ], 500);
         }
+        $userPermissions = $response[1]->permissions->pluck("name");
+        $customUser = [
+            'id' => $response[1]->id,
+            'name' => $response[1]->name,
+            'email' => $response[1]->email,
+            'permissions' => $userPermissions
+        ];
         return response()->json([
             'message' => 'Login Successfull',
-            'data' => $token,
+            'token' => $response[0],
+            'user' => $customUser,
+
         ], 200);
     }
 

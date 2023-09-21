@@ -26,10 +26,10 @@ class UserService
 
         $user = User::where('email', $email)->first();
         if (!$user || !Hash::check($password, $user->password)) {
-            return -1;
+            return [-1];
         }
         $token = $user->createToken('token')->plainTextToken;
-        return $token;
+        return [$token, $user];
     }
 
     public function logout()

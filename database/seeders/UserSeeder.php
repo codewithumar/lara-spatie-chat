@@ -1,19 +1,20 @@
 <?php
 
 namespace Database\Seeders;
+
 use Illuminate\Database\Seeder;
+use App\Models\User;
 
 class UserSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
+
     public function run(): void
     {
-        $user = \App\Models\User::factory()->create([
-            'name' => 'Example User',
-            'email' => 'test@example.com',
-            'password' => '12345678',
+        $user = User::factory()->create([
+            "name" => "Admin",
+            "email" => "admin@gmail.com",
+            "password" => "12345678",
+
         ]);
 
         $user->givePermissionTo('can-access-all-users');
@@ -36,6 +37,6 @@ class UserSeeder extends Seeder
         $user->givePermissionTo('can-update-department');
         $user->givePermissionTo('can-delete-department');
         $user->givePermissionTo('can-view-department');
-
+        $user->givePermissionTo('can-grant-permission');
     }
 }

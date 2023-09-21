@@ -33,6 +33,7 @@ class PermissionSeeder extends Seeder
 			['can-update-department'],
 			['can-delete-department'],
 			['can-view-department'],
+			['can-grant-permission'],
 		];
 
 		foreach ($permissions as $permission) {

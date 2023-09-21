@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\ModelHasPermissions;
 
 class Permission extends Model
 {
@@ -14,4 +15,9 @@ class Permission extends Model
 		'name',
 		'guard_name',
 	];
+
+	public function modelHasPermissions()
+	{
+		return $this->hasMany(ModelHasPermissions::class, 'id', 'model_id');
+	}
 }

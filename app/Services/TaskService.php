@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Services;
 
 use App\Models\Task;
@@ -21,7 +22,6 @@ class TaskService
             'comments' => $comments,
             'user_id' => $user_id,
         ]);
-
     }
 
     public function getTask()
@@ -30,7 +30,6 @@ class TaskService
     }
     public function showTask($id)
     {
-        // Retrieve the task by ID or return a JSON response with a 404 status if not found
         $task = Task::find($id);
         if (!$task) {
             return -1;
@@ -63,7 +62,6 @@ class TaskService
         }
         $task->user_id = $data['user_id'];
         return $task->save();
-
     }
 
     public function deleteTask($id)
@@ -75,4 +73,3 @@ class TaskService
         return $task->delete();
     }
 }
-?>

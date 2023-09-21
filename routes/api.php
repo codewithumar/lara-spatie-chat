@@ -1,8 +1,10 @@
 <?php
 
+
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\TeamController;
 use App\Http\Controllers\TeamMemberController;
@@ -27,6 +29,13 @@ Route::post('/users/login', [UserController::class, 'loginUser']); // Done
 
 Route::middleware('auth:sanctum')->group(function () {
 
+    Route::get('/messages', [\App\Http\Controllers\ChatsController::class, "fetchMessages"]);
+    Route::post('/sendmessage', [\App\Http\Controllers\ChatsController::class, "sendMessage"]);
+
+    Route::prefix("/premissions")->group(function () {
+        Route::get('/getpermissions', [PermissionController::class, "getPermissions"]);
+        Route::post('/grantpermission', [PermissionController::class, "grantPermission"])->middleware('permission:can-grant-permission');
+    });
     // Route for Users
     Route::prefix('/users')->group(function () {
         Route::get('/', [UserController::class, 'getUsers'])->middleware('permission:can-access-all-users'); // Done

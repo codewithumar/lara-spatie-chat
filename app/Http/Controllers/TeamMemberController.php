@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\CreateTeamMemberRequest;
 use App\Services\TeamMemberService;
+use Illuminate\Auth\Events\Validated;
 
 class TeamMemberController extends Controller
 {
@@ -21,6 +22,9 @@ class TeamMemberController extends Controller
     public function postTeam(CreateTeamMemberRequest $request, TeamMemberService $teamMemberService)
     {
         $validate = $request->validated();
+        // return $validate;
+        $response = $teamMemberService->checkTeam($validate['user_id']);
+        return $response;
         $response = $teamMemberService->add($validate);
         if (!$response) {
             return response()->json([
